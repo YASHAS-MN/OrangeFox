@@ -1,0 +1,19 @@
+# Core Partitions
+/boot           emmc    /dev/block/by-name/boot         flags=backup=1;display="Boot";slotselect
+/dtbo           emmc    /dev/block/by-name/dtbo         flags=backup=1;display="DTBO"
+/vbmeta         emmc    /dev/block/by-name/vbmeta       flags=backup=1;display="VBMeta";slotselect
+/vbmeta_system  emmc    /dev/block/by-name/vbmeta_system flags=backup=1;display="VBMeta System";slotselect
+/vbmeta_vendor  emmc    /dev/block/by-name/vbmeta_vendor flags=backup=1;display="VBMeta Vendor";slotselect
+
+# Sensitive / IMEI Partitions (NVRAM/NVDATA)
+/nvram          emmc    /dev/block/by-name/nvram        flags=backup=1;display="NVRAM";subpartitionof=/nvdata
+/nvdata         ext4    /dev/block/by-name/nvdata       flags=backup=1;display="NVDATA"
+/nvcfg          ext4    /dev/block/by-name/nvcfg        flags=backup=1;subpartitionof=/nvdata
+/protect_f      ext4    /dev/block/by-name/protect1     flags=backup=1;subpartitionof=/nvdata
+/protect_s      ext4    /dev/block/by-name/protect2     flags=backup=1;subpartitionof=/nvdata
+/persist        ext4    /dev/block/by-name/persist      flags=backup=1;display="Persist"
+/proinfo        emmc    /dev/block/by-name/proinfo      flags=backup=1;display="Proinfo"
+
+# Removable Storage
+/external_sd    auto    /dev/block/mmcblk1p1    /dev/block/mmcblk1    flags=display="MicroSD Card";storage;wipeingui;removable
+/usb_otg        auto    /dev/block/sda1         /dev/block/sda        flags=display="USB-OTG";storage;wipeingui;removable
