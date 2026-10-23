@@ -46,6 +46,10 @@ BOARD_SUPER_PARTITION_GROUPS := main
 BOARD_MAIN_SIZE := 9122611200
 BOARD_MAIN_PARTITION_LIST := system vendor product
 
+# Prevent root/vendor symlink vs directory conflict during ramdisk packaging
+BOARD_ROOT_EXTRA_SYMLINKS :=
+TARGET_RECOVERY_DEVICE_DIRS += device/infinix/X689
+
 # File System & Decryption
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
