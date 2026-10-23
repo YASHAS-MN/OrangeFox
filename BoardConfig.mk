@@ -46,15 +46,14 @@ BOARD_SUPER_PARTITION_GROUPS := main
 BOARD_MAIN_SIZE := 9122611200
 BOARD_MAIN_PARTITION_LIST := system vendor product
 
-# Prevent root/vendor symlink vs directory conflict during ramdisk packaging
+# Prevent root/vendor directory collision with symlink
 BOARD_ROOT_EXTRA_SYMLINKS :=
-TARGET_RECOVERY_DEVICE_DIRS += device/infinix/X689
+BOARD_SUPPRESS_SECURE_ERASE := true
 
 # File System & Decryption
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
 TW_INCLUDE_FBE_METADATA_DECRYPT := true
-BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Display & Brightness Settings (Hot 10S: 720x1640)
 TW_THEME := portrait_hdpi

@@ -53,11 +53,14 @@ jobs:
           cp -r $GITHUB_WORKSPACE/device/infinix/X689 /home/runner/fox_12.1/device/infinix/
           ls -la /home/runner/fox_12.1/device/infinix/X689
 
-      - name: Pre-populate DTB Target
+      - name: Pre-populate DTB Target & Patch Ramdisk Rsync
         run: |
           mkdir -p /home/runner/fox_12.1/out/target/product/X689
           cp /home/runner/fox_12.1/device/infinix/X689/prebuilt/dtb /home/runner/fox_12.1/out/target/product/X689/dtb.img
-          ls -la /home/runner/fox_12.1/out/target/product/X689/
+          
+          # Patch Makefile rsync to prevent symlink over directory error (code 23)
+          cd /home/runner/fox_12.1
+          sed -i 's/rsync -a/rsync -aK --delete/g' build/make/core/Makefile || true
 
       - name: Compile OrangeFox (bootimage)
         run: |
