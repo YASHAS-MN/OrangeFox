@@ -2,7 +2,6 @@
 export FOX_BUILD_DEVICE="X689"
 export TARGET_DEVICE="X689"
 export OF_MAINTAINER="Yashas"
-export FOX_VERSION="R12.1"
 export FOX_BUILD_TYPE="Unofficial"
 
 # Virtual A/B & Dynamic Partition Configuration
