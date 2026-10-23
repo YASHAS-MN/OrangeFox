@@ -10,12 +10,13 @@ TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := generic
+TARGET_BOARD_SUFFIX := _64
 
-# Board / Platform
+# Platform / Hardware
 TARGET_BOARD_PLATFORM := mt6768
 TARGET_BOOTLOADER_BOARD_NAME := CY-X689-H696-G
 
-# Kernel Specs from Magisk Dump
+# Kernel Specs from Stock Magisk Dump
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
@@ -32,13 +33,19 @@ BOARD_HAS_NO_REAL_SDCARD := true
 
 # Virtual A/B & Dynamic Partitions
 BOARD_USES_RECOVERY_AS_BOOT := true
-BOARD_BUILD_SYSTEM_ROOT_IMAGE := true
+BOARD_BUILD_SYSTEM_ROOT_IMAGE := false
+BOARD_SUPER_PARTITION_SIZE := 9126805504
 BOARD_SUPER_PARTITION_GROUPS := main
-TARGET_COPY_OUT_VENDOR := vendor
+BOARD_MAIN_SIZE := 9122611200
+BOARD_MAIN_PARTITION_LIST := system vendor product
 
-# File System & Decryption Support
+TARGET_COPY_OUT_VENDOR := vendor
+TARGET_COPY_OUT_PRODUCT := product
+
+# File System & Decryption
 TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_CRYPTO_FBE := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
 BOARD_SUPPRESS_SECURE_ERASE := true
 
 # Display Offsets (Hot 10S: 720x1640)
