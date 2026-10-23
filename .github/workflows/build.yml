@@ -33,7 +33,6 @@ jobs:
             libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig \
             python3 python-is-python3 openjdk-8-jdk rsync bc cpio
           
-          # Install official standalone repo tool
           sudo curl -s https://storage.googleapis.com/git-repo-downloads/repo -o /usr/local/bin/repo
           sudo chmod a+rx /usr/local/bin/repo
 
@@ -54,11 +53,16 @@ jobs:
           cp -r $GITHUB_WORKSPACE/device/infinix/X689 /home/runner/fox_12.1/device/infinix/
           ls -la /home/runner/fox_12.1/device/infinix/X689
 
+      - name: Pre-populate DTB Target
+        run: |
+          mkdir -p /home/runner/fox_12.1/out/target/product/X689
+          cp /home/runner/fox_12.1/device/infinix/X689/prebuilt/dtb /home/runner/fox_12.1/out/target/product/X689/dtb.img
+          ls -la /home/runner/fox_12.1/out/target/product/X689/
+
       - name: Compile OrangeFox (bootimage)
         run: |
           cd /home/runner/fox_12.1
           
-          # Disable shell exit-on-error temporarily while sourcing envsetup
           set +e
           source build/envsetup.sh
           set -e
