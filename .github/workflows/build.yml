@@ -33,28 +33,26 @@ jobs:
             libx11-dev lib32z1-dev libgl1-mesa-dev libxml2-utils xsltproc unzip fontconfig \
             python3 python-is-python3 openjdk-8-jdk rsync bc cpio
           
-          # Setup git identity
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Setup OrangeFox Build Tree via Sync Tool
+      - name: Sync OrangeFox 12.1 Manifest
         run: |
-          mkdir -p ~/OrangeFox_Sync
-          cd ~/OrangeFox_Sync
+          mkdir -p /home/runner/OrangeFox_sync
+          cd /home/runner/OrangeFox_sync
           git clone https://gitlab.com/OrangeFox/sync.git
           cd sync
-          # Run non-interactively using bash parameters
-          ./orangefox_sync.sh --branch 11.0 --path ~/fox_11.0
+          yes | ./orangefox_sync.sh --branch 12.1 --path /home/runner/fox_12.1
 
       - name: Link Infinix X689 Device Tree
         run: |
-          mkdir -p ~/fox_11.0/device/infinix
-          cp -r $GITHUB_WORKSPACE/device/infinix/X689 ~/fox_11.0/device/infinix/
-          ls -la ~/fox_11.0/device/infinix/X689
+          mkdir -p /home/runner/fox_12.1/device/infinix
+          cp -r $GITHUB_WORKSPACE/device/infinix/X689 /home/runner/fox_12.1/device/infinix/
+          ls -la /home/runner/fox_12.1/device/infinix/X689
 
       - name: Compile OrangeFox (bootimage)
         run: |
-          cd ~/fox_11.0
+          cd /home/runner/fox_12.1
           source build/envsetup.sh
           
           export ALLOW_MISSING_DEPENDENCIES=true
@@ -67,9 +65,9 @@ jobs:
       - name: Upload Compiled Recovery Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: OrangeFox-R11.1-Unofficial-Infinix-X689
+          name: OrangeFox-Unofficial-Infinix-X689
           path: |
-            ~/fox_11.0/out/target/product/X689/boot.img
-            ~/fox_11.0/out/target/product/X689/OrangeFox*.zip
-            ~/fox_11.0/out/target/product/X689/OrangeFox*.img
+            /home/runner/fox_12.1/out/target/product/X689/boot.img
+            /home/runner/fox_12.1/out/target/product/X689/OrangeFox*.zip
+            /home/runner/fox_12.1/out/target/product/X689/OrangeFox*.img
           if-no-files-found: error
