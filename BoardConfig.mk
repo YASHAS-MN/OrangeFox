@@ -16,12 +16,19 @@ TARGET_BOARD_SUFFIX := _64
 TARGET_BOARD_PLATFORM := mt6768
 TARGET_BOOTLOADER_BOARD_NAME := CY-X689-H696-G
 
-# Kernel & DTB Configuration
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
-BOARD_KERNEL_BASE := 0x40078000
+# Accurate Hardware Memory Map (Extracted from stock boot_b)
+BOARD_KERNEL_BASE := 0x40000000
+BOARD_KERNEL_OFFSET := 0x00080000
+BOARD_RAMDISK_OFFSET := 0x07c80000
+BOARD_TAGS_OFFSET := 0x0bc80000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_BOOT_HEADER_VERSION := 2
-BOARD_KERNEL_IMAGE_NAME := kernel
+
+# Kernel Specs & Stock Board Identification
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 buildvariant=user
+BOARD_CUSTOM_BOOTIMG_MK :=
+BOARD_MKBOOTIMG_ARGS := --board "CY-X689-H696-G" --ramdisk_offset 0x07c80000 --tags_offset 0x0bc80000
+
 TARGET_PREBUILT_KERNEL := device/infinix/X689/prebuilt/kernel
 TARGET_PREBUILT_DTB := device/infinix/X689/prebuilt/dtb
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -46,7 +53,7 @@ BOARD_SUPER_PARTITION_GROUPS := main
 BOARD_MAIN_SIZE := 9122611200
 BOARD_MAIN_PARTITION_LIST := system vendor product
 
-# Prevent root/vendor directory collision with symlink
+# Ramdisk & File System Rules
 BOARD_ROOT_EXTRA_SYMLINKS :=
 BOARD_SUPPRESS_SECURE_ERASE := true
 
